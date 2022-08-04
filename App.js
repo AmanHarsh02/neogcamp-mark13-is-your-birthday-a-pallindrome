@@ -139,10 +139,39 @@ function findNextPallindromeDate(date) {
     return [count, nextDate];
 }
 
-var date = {
-    day: 8,
-    month: 8,
-    year: 2021
-};
+const inputDate = document.querySelector("#date-input");
+const checkBtn = document.querySelector("#check-btn");
+const output = document.querySelector("#output-div");
 
-console.log(findNextPallindromeDate(date));
+function onClickHandler() {
+    
+    var dateStr = inputDate.value;
+
+    output.innerText = "";
+
+    if(dateStr !== '') {
+        var dateList = dateStr.split('-');
+
+        var formattedDate = {
+            day: Number(dateList[2]),
+            month: Number(dateList[1]),
+            year: Number(dateList[0])
+        } ;
+
+        var dateStr = convertNumToStr(formattedDate);
+
+        var isPalindrome = checkPalindromeForAllDateFormats(dateStr);
+
+        if(isPalindrome) {
+            output.innerText = "Yay! Your birthday is a Palindrome. 🥳";
+        }
+        else {
+            var [count, nextDate] = findNextPallindromeDate(formattedDate);
+
+            output.innerText = "Oops! You missed it by " + count + " days! 😔 The next palindrome date is " + nextDate.day + "-" + nextDate.month + "-" + nextDate.year + ".";
+        }
+        
+    }
+}
+
+checkBtn.addEventListener("click", onClickHandler);

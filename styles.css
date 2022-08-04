@@ -1,5 +1,82 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
 
+:root {
+    --primary-color: #2563eb;
+    --background-color: #1e293b;
+}
+
 body {
     font-family: 'Montserrat', sans-serif;
+    color: white;
+    background-color: var(--background-color);
+}
+
+.container-div {
+    text-align: center;
+    margin-top: 3rem;
+    min-height: 55vh;
+}
+
+#date-input {
+    display: block;
+    margin: auto;
+    padding: 0.5rem 0.5rem;
+    width: 10rem;
+    border: 2px solid var(--primary-color);
+    border-radius: 0.5rem;
+}
+
+#check-btn {
+    font-family: 'Montserrat', sans-serif;
+    margin: 2rem;
+    padding: 0.3rem 0.5rem;
+    width: 8rem;
+    background-color: var(--primary-color);
+    color: white;
+    font-size: 1rem;
+    border: 2px solid var(--primary-color);
+    border-radius: 0.5rem;
+    cursor: pointer;
+}
+
+#output-div {
+    font-size: 1.2rem;
+}
+
+.footer {
+    margin-top: 6rem;
+    margin-bottom: 2rem;
+    text-align: center;
+}
+
+.footer p {
+    font-weight: 100;
+    font-size: 1.2rem;
+    letter-spacing: 0.1rem;
+    color: white;
+}
+
+.footer-header {
+    margin-top: 2rem;
+    font-size: 1.1rem;
+    letter-spacing: 0.2rem;
+    color: white;
+}
+
+.list-item-inline {
+    display: inline;
+    padding: 0rem 0.5rem;
+}
+
+.footer .link {
+    color: white;
+}
+
+.footer .social-link {
+    text-decoration: none;
+    color: white;
+}
+
+.footer ul {
+    padding-inline-start: 0px;
 }
