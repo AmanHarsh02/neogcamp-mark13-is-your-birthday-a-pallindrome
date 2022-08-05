@@ -119,7 +119,7 @@ function getNextDate(date) {
     };
 }
 
-function findNextPallindromeDate(date) {
+function findNextPalindromeDate(date) {
     var nextDate = getNextDate(date);
     count = 0;
 
@@ -137,6 +137,71 @@ function findNextPallindromeDate(date) {
     }
 
     return [count, nextDate];
+}
+
+function getPreviousDate(date) {
+    var day = date.day - 1;
+    var month = date.month;
+    var year = date.year;
+
+    var daysInMonth = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+
+    if (month === 3) {
+        if (isLeapYear(year)) {
+            if (day < 1) {
+                day = 29;
+                month--;
+            }
+        } else {
+            if (day < 1) {
+                day = 28;
+                month--;
+            }
+        }
+    } else {
+        if (day < 1) {
+            if(month === 1) {
+                month--;
+                day = daysInMonth[month];
+            }
+            else {
+                month--;
+                day = daysInMonth[month-1];
+            }     
+        }
+    }
+
+    if (month < 1) {
+        month = 12;
+        year--;
+    }
+
+    return {
+        day: day,
+        month: month,
+        year: year
+    };
+}
+
+function findPreviousPalindromeDate(date) {
+
+    var previousDate = getPreviousDate(date);
+    count = 0;
+
+    while (1) {
+        count++;
+
+        var dateStr = convertNumToStr(previousDate);
+        var isPalindrome = checkPalindromeForAllDateFormats(dateStr);
+
+        if (isPalindrome === true) {
+            break;
+        }
+
+        previousDate = getPreviousDate(previousDate);
+    }
+
+    return [count, previousDate];
 }
 
 const inputDate = document.querySelector("#date-input");
@@ -166,9 +231,28 @@ function onClickHandler() {
             output.innerText = "Yay! Your birthday is a Palindrome. 🥳";
         }
         else {
-            var [count, nextDate] = findNextPallindromeDate(formattedDate);
+           var [countNext, nextDate] = findNextPalindromeDate(formattedDate);
 
-            output.innerText = "Oops! You missed it by " + count + " days! 😔 The next palindrome date is " + nextDate.day + "-" + nextDate.month + "-" + nextDate.year + ".";
+            var [countPrevious, previousDate] = findPreviousPalindromeDate(formattedDate);
+
+            var count;
+
+            if(countNext < countPrevious) {
+                count = countNext;
+            }
+            else {
+                count = countPrevious;
+            }
+
+            var dayOrDays;
+            var dayOrDaysNext;
+            var dayOrDaysPrev;
+
+            dayOrDays = count === 1 ? "day" : "days";
+            dayOrDaysNext = countNext === 1 ? "day" : "days";
+            dayOrDaysPrev = countPrevious === 1 ? "day" : "days";
+
+            output.innerText = "Oops! You missed it by " + count + " " + dayOrDays + "! 😔" + "\nThe next palindrome date is " + nextDate.month + "-" + nextDate.day + "-" + nextDate.year + "." + " Which is " + countNext + " " +  dayOrDaysNext + " ahead." + "\nThe previous palindrome date was " + previousDate.month + "-" + previousDate.day + "-" + previousDate.year + "." + " Which was " + countPrevious + " " + dayOrDaysPrev +" before.";
         }
         
     }
