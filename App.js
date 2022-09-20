@@ -160,14 +160,13 @@ function getPreviousDate(date) {
         }
     } else {
         if (day < 1) {
-            if(month === 1) {
+            if (month === 1) {
                 month--;
                 day = daysInMonth[month];
-            }
-            else {
+            } else {
                 month--;
-                day = daysInMonth[month-1];
-            }     
+                day = daysInMonth[month - 1];
+            }
         }
     }
 
@@ -209,53 +208,58 @@ const checkBtn = document.querySelector("#check-btn");
 const output = document.querySelector("#output-div");
 
 function onClickHandler() {
-    
+
     var dateStr = inputDate.value;
 
-    output.innerText = "";
+    if (dateStr) {
 
-    if(dateStr !== '') {
-        var dateList = dateStr.split('-');
+        output.innerText = "";
 
-        var formattedDate = {
-            day: Number(dateList[2]),
-            month: Number(dateList[1]),
-            year: Number(dateList[0])
-        } ;
+        if (dateStr !== '') {
+            var dateList = dateStr.split('-');
 
-        var dateStr = convertNumToStr(formattedDate);
+            var formattedDate = {
+                day: Number(dateList[2]),
+                month: Number(dateList[1]),
+                year: Number(dateList[0])
+            };
 
-        var isPalindrome = checkPalindromeForAllDateFormats(dateStr);
+            var dateStr = convertNumToStr(formattedDate);
 
-        if(isPalindrome) {
-            output.innerText = "Yay! Your birthday is a Palindrome. 🥳";
-        }
-        else {
-           var [countNext, nextDate] = findNextPalindromeDate(formattedDate);
+            var isPalindrome = checkPalindromeForAllDateFormats(dateStr);
 
-            var [countPrevious, previousDate] = findPreviousPalindromeDate(formattedDate);
+            if (isPalindrome) {
+                output.innerText = "Yay! Your birthday is a Palindrome. 🥳";
+            } else {
+                var [countNext, nextDate] = findNextPalindromeDate(formattedDate);
 
-            var count;
+                var [countPrevious, previousDate] = findPreviousPalindromeDate(formattedDate);
 
-            if(countNext < countPrevious) {
-                count = countNext;
+                var count;
+
+                if (countNext < countPrevious) {
+                    count = countNext;
+                } else {
+                    count = countPrevious;
+                }
+
+                var dayOrDays;
+                var dayOrDaysNext;
+                var dayOrDaysPrev;
+
+                dayOrDays = count === 1 ? "day" : "days";
+                dayOrDaysNext = countNext === 1 ? "day" : "days";
+                dayOrDaysPrev = countPrevious === 1 ? "day" : "days";
+
+                output.innerText = "Oops! You missed it by " + count + " " + dayOrDays + "! 😔" + "\nThe next palindrome date is " + nextDate.month + "-" + nextDate.day + "-" + nextDate.year + "." + " Which is " + countNext + " " + dayOrDaysNext + " ahead." + "\nThe previous palindrome date was " + previousDate.month + "-" + previousDate.day + "-" + previousDate.year + "." + " Which was " + countPrevious + " " + dayOrDaysPrev + " before.";
             }
-            else {
-                count = countPrevious;
-            }
 
-            var dayOrDays;
-            var dayOrDaysNext;
-            var dayOrDaysPrev;
-
-            dayOrDays = count === 1 ? "day" : "days";
-            dayOrDaysNext = countNext === 1 ? "day" : "days";
-            dayOrDaysPrev = countPrevious === 1 ? "day" : "days";
-
-            output.innerText = "Oops! You missed it by " + count + " " + dayOrDays + "! 😔" + "\nThe next palindrome date is " + nextDate.month + "-" + nextDate.day + "-" + nextDate.year + "." + " Which is " + countNext + " " +  dayOrDaysNext + " ahead." + "\nThe previous palindrome date was " + previousDate.month + "-" + previousDate.day + "-" + previousDate.year + "." + " Which was " + countPrevious + " " + dayOrDaysPrev +" before.";
         }
-        
+
+    } else {
+        output.innerText = "Please select your date of birth!";
     }
+
 }
 
 checkBtn.addEventListener("click", onClickHandler);
